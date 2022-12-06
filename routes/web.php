@@ -8,13 +8,19 @@ use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\appointmentController;
 use App\Http\Controllers\Admin\calendarController;
 use App\Http\Controllers\Admin\cartController;
+use App\Http\Controllers\Admin\cartServicesController;
+use App\Http\Controllers\Admin\Client\clientController;
 use App\Http\Controllers\Admin\dashCont;
+use App\Http\Controllers\Admin\expensesController;
 use App\Http\Controllers\Admin\inventoryController;
 use App\Http\Controllers\Admin\userController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\servicesOnCartCOntroller;
-use App\Http\Controllers\Admin\transactionController;
 
+use App\Http\Controllers\Admin\transactionController;
+use App\Http\Controllers\Admin\transactionDetailsController;
+use App\Http\Controllers\Admin\wagesController;
+use App\Http\Controllers\homeController;
+use App\Http\Controllers\servicesInCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,19 +33,16 @@ use App\Http\Controllers\Admin\transactionController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [homeController::class, 'index']);
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+  Route::get('/dashboard', [dashCont::class, 'index'])->name('dashboard');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-// Route::middleware(['auth', 'verified'])->group(function () {
-//   Route::get('/dashboard', [dashCont::class, 'index'])->name('dashboard');
-// });
-Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(
+Route::middleware(['auth', 'verified', 'role:admin'])->name('admin.')->prefix('admin')->group(
     function(){
         Route::get('/dashboard', [IndexController::class, 'index'])->name('index');
 
@@ -50,6 +53,12 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
          Route::post('/permissions/{permission}/roles',[PermissionController::class, 'assignRole'])->name('permissions.roles');
         Route::delete('/permissions/{permission}/roles/{role}',[PermissionController::class, 'removeRole'])->name('permissions.roles.remove');
         Route::get('/users', [userController::class, 'index'])->name('user.index');
+
+        Route::resource('/users/clients', clientController::class, ['names' => [
+        'index' => 'users.clients.index', 
+        'store' => 'transaction.expenses.store', 
+    ]]);
+
         Route::get('/users/{user}', [userController::class, 'show'])->name('user.show');
          Route::delete('/users/{user}',[userController::class, 'destroy'])->name('user.destroy');
          Route::post('/users/{user}/roles' , [userController::class, 'assignRole'])->name('user.roles');
@@ -62,19 +71,32 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
 
          //appointment
 
+                    Route::resource('/appointment', appointmentController::class);
+           Route::get('/appointment/generatepdf' , [appointmentController::class, 'pdf'])->name('appointment.generatepdf');
           Route::post('/appointment/{appointment}' , [appointmentController::class, 'update'])->name('appointment.update');
            Route::post('/appointment/reject/{appointment}' , [appointmentController::class, 'rejectAppointment'])->name('appointment.reject.rejectAppointment');
            Route::post('/appointment/finished/{appointment}' , [appointmentController::class, 'finishedAppointment'])->name('appointment.finished.finishedAppointment');
-            Route::resource('/appointment', appointmentController::class);
+
             Route::delete('/appointment/{appointment}',[appointmentController::class, 'destroy'])->name('appointment.delete');
             //calendar
              Route::resource('/calendar', calendarController::class);
 
+                  Route::resource('/transaction/expenses', expensesController::class, ['names' => [
+        'index' => 'transaction.expenses.index', 
+        'store' => 'transaction.expenses.store', 
+    ]]);
+
                Route::resource('/transaction', transactionController::class);
+               route::get('/transaction/{transaction}',[transactionController::class, 'getDetails'])->name('transaction.getDetails');
+               route::get('/transaction/sales/sale',[transactionController::class, 'sales'])->name('transaction.sales.sale');
+           
 
              Route::resource('/inventory', inventoryController::class);
-            Route::get('/cashier', [servicesOnCartCOntroller::class, 'index'])->name('cashier.index');
+            Route::get('/cashier', [cartServicesController::class, 'index'])->name('cashier.index');
              Route::post('/cashier',[cartController:: class, 'store'])->name('cashier.store');
+
+                Route::resource('/wages',wagesController::class);
+                 Route::post('/wages/{wage}',[wagesController::class, 'update'])->name('wages.update');
 
 
     }
@@ -87,6 +109,13 @@ Route::middleware(['auth', 'role:cashier'])->name('cashier.')->prefix('cashier')
         Route::get('/dashboard', [cashierIndexController::class, 'index'])->name('index');
     }
 );
+
+Route::middleware(['auth', 'role:user'])->name('user.')->prefix('user')->group(
+    function(){
+        Route::get('/dashboard', [homeController::class, 'index'])->name('index');
+    }
+);
+
 
 
 require __DIR__.'/auth.php';

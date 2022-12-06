@@ -4,39 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Appointment extends Model
 {
-    protected $table = 'appointment';
     use HasFactory;
 
-    protected $fillable = [
-        'user_id', 
-        'dresser_id', 
-        'service_id',
+    protected $table = 'appointment';
+    protected $fillable = ['user_id',
+    'dresser_id',
+    'service_id',
     'appointment_price',
     'start_time',
-    'end_time'];
+    'end_time','status'];
 
-        public function user(){
-        return $this->belongsTo(User::class, 'user_id');
+  public function user(){
+        return $this->belongsTo(User::class);
     }
 
-            public function dresser(){
-        return $this->belongsTo(User::class, 'dresser_id');
+      public function dresser(){
+        return $this->belongsTo(User::class);
     }
 
-       public function service(){
+      public function service(){
         return $this->belongsTo(Services::class);
     }
-
-    public function transaction(){
-        return $this->belongsTo(Transaction::class);
-    }
-
-
-    public static function scopeSearch($query, $term){
+    
+        public static function scopeSearch($query, $term){
 
         $term= "%$term%";
 
@@ -50,6 +43,4 @@ class Appointment extends Model
 
 
     }
-
-    
 }

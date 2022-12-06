@@ -12,10 +12,9 @@ class UserController extends Controller
 {
     public function index()
     { 
-        $users =User::where('isEmployee', 0)->get();
-        $employees =User::where('isEmployee', 1)->get();
+       
 
-        return view('admin.users.index', compact('users', 'employees'));
+        return view('admin.users.index');
     }
 
     public function show(User $user)
@@ -31,6 +30,12 @@ class UserController extends Controller
         if ($user->hasRole($request->role)) {
             return back()->with('message', 'Role exists.');
         }
+
+      if($request->role == 'admin'){
+        $user->removeRole('cashier');
+      }elseif($request->role == 'cashier'){
+        $user->removeRole('admin');
+      }
 
         $user['isEmployee'] = 1;
         $user->assignRole($request->role)->update();

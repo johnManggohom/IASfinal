@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\AppointmentOverlap;
+use App\Rules\TimeBetween;
 use Illuminate\Foundation\Http\FormRequest;
 
 class appointmentStoreRequest extends FormRequest
@@ -25,12 +27,12 @@ class appointmentStoreRequest extends FormRequest
     {
         return [
             
-            'time'=>'required',
-            'date'=>'required',
+            // 'time'=>'required',
+            // 'date'=>'required',
             'dresser_id'=>'required',
             'service_id'=> 'required',
             // 'appointment_price'=> 'required',
-            // 'start_time'=>'required', 
+             'start_time'=>['required', new AppointmentOverlap(), new TimeBetween()], 
             // 'end_time' => 'required', 
         ];
     }

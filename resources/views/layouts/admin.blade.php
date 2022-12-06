@@ -6,16 +6,14 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Samantha Love Salon</title>
-    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <!-- Fonts -->
+   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+         {{-- <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
         <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-
-
         
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
 
@@ -39,7 +37,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" x-cloak x-data="{openModal: false}"
+ :class="openModal ? 'overflow-hidden' : 'overflow-visible'">
         @if (Session::has('message'))
         <div class="bg-indigo-600">
   <div class="mx-auto max-w-7xl py-3 px-3 sm:px-6 lg:px-8">
@@ -85,12 +84,40 @@
                 <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
                     <x-admin-link href="{{ route('admin.roles.index') }}" :active="request()->routeIs('admin.roles.index')"> {{ __('Roles') }}</x-admin-link>
                     {{-- <x-admin-link  href="{{ route('admin.permissions.index') }}" :active="request()->routeIs('admin.permissions.index')"> {{ __('Permissions') }}</x-admin-link> --}}
-                     <x-admin-link  href="{{ route('admin.user.index') }}" :active="request()->routeIs('admin.user.index')"> {{ __('Users') }}</x-admin-link>
+                   
                      <x-admin-link  href="{{ route('admin.appointment.index') }}" :active="request()->routeIs('admin.appointment.index')"> {{ __('Appointment') }}</x-admin-link> 
+                       <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                            <span>Users</span>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class=" right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+                               <x-admin-link  href="{{ route('admin.user.index') }}" :active="request()->routeIs('admin.user.index')"> {{ __('Employees') }}</x-admin-link>    
+                               <x-admin-link  href="{{ route('admin.users.clients.index') }}" :active="request()->routeIs('admin.users.clients.index')"> {{ __('Clients') }}</x-admin-link> 
+                             
+                        </div>
+                    </div>
                       <x-admin-link href="{{ route('admin.services.index') }}" :active="request()->routeIs('admin.services.index')"> {{ __('Services') }}</x-admin-link>
                       <x-admin-link  href="{{ route('admin.calendar.index') }}" :active="request()->routeIs('admin.calendar.index')"> {{ __('Calendar') }}</x-admin-link> 
-                      <x-admin-link  href="{{ route('admin.transaction.index') }}" :active="request()->routeIs('admin.transaction.index')"> {{ __('Transactions') }}</x-admin-link> 
+                      
                       <x-admin-link  href="{{ route('admin.inventory.index') }}" :active="request()->routeIs('admin.inventory.index')"> {{ __('Inventory') }}</x-admin-link> 
+                      
+                         <div @click.away="open = false" class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                            <span>Transactions</span>
+                            <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                        <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class=" right-0 w-full mt-2 origin-top-right rounded-md shadow-lg">
+
+                               <x-admin-link  href="{{ route('admin.transaction.index') }}" :active="request()->routeIs('admin.transaction.index')"> {{ __('Transactions') }}</x-admin-link> 
+                             <x-admin-link  href="{{ route('admin.transaction.sales.sale') }}" :active="request()->routeIs('admin.transaction.sales.sale')"> {{ __('Sales') }}</x-admin-link> 
+                               <x-admin-link  href="{{ route('admin.transaction.expenses.index') }}" :active="request()->routeIs('admin.  transaction.expenses.index')"> {{ __('Expenses') }}</x-admin-link> 
+                        </div>
+                    </div>
+
+                   
+                        <x-admin-link  href="{{ route('admin.wages.index') }}" :active="request()->routeIs('admin.wages.index')"> {{ __('Salary') }}</x-admin-link> 
+                        
                          <x-admin-link  href="{{ route('admin.cashier.index') }}" :active="request()->routeIs('admin.cashier.index')"> {{ __('Cashier') }}</x-admin-link> 
                     <div @click.away="open = false" class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
@@ -113,10 +140,13 @@
                     </div>
                 </nav>
         </div>
-    <div class="flex w-full bg-slate-50">
+    <div class="flex w-full bg-slate-100">
        {{ $slot }}
+          <livewire:custom-modal>
+             <livewire:service-modal>
         </div>
-
+        
+     
         @livewireScripts
 
         <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>

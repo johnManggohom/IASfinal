@@ -50,5 +50,25 @@ class User extends Authenticatable
        public function transaction(){
         return $this->HasOne(Transaction::class);
     }
+
+        public function wage()
+    {
+        return $this->hasOne(Wage::class);
+    }
+
+
+
+    public static function scopeSearch($query, $term){
+
+        $term= "%$term%";
+
+        $query->where(function ($query) use ($term){
+            $query->where('name', 'like', $term );
+        });
+
+
+
+    }
+
     
 }

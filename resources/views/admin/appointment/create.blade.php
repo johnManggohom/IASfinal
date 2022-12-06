@@ -40,9 +40,9 @@
                             </div>
                     </div>
 
-                                            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
 
-                            <div class="flex justify-center">
+                            {{-- <div class="flex justify-center">
                         <div class="timepicker relative form-floating mb-3 xl:w-96">
                             <input type="text" name= "time"
                             class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -58,9 +58,9 @@
                             placeholder="Select a date" />
                             <label for="floatingInput" class="text-gray-700">Select a date</label>
                         </div>
-                        </div>
+                        </div> --}}
 
-                                                    {{-- <div class="sm:col-span-6">
+                                                    <div class="sm:col-span-6">
                                     <label for="res_date" class="block text-sm font-medium text-gray-700"> Reservation
                                         Date
                                     </label>
@@ -69,11 +69,11 @@
                                             value=""
                                             class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                                     </div>
-                                    <span class="text-xs">Please choose the time between 17:00-23:00.</span>
-                                    @error('res_date')
+                                    <span class="text-xs">Please choose the time between 10:00 A.M - 8:00 P.M.</span>
+                                    @error('start_time')
                                         <div class="text-sm text-red-400">{{ $message }}</div>
                                     @enderror
-                                </div> --}}
+                                </div>
                 
                           <div class="sm:col-span-6 pt-5">
                             <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-md text-white">Create Role</button>
@@ -84,5 +84,3 @@
         </div>
     </div>
 </x-admin-layout>
-
-

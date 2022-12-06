@@ -46,6 +46,8 @@ class RoleController extends Controller
       $permissions = Permission::all();
       return view('admin.roles.edit', compact('role','permissions'));
     }
+
+    
 public function update(Request $request, Role $role){
   $validated = $request->validate(['name'=>'required']);
   $role->update($validated);

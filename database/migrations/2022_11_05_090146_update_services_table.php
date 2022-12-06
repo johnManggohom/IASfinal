@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('services', function (Blueprint $table) {
             //
-
+            
              $table->decimal('comission', 10,2)->nullable()->after('prices');
         });
     }

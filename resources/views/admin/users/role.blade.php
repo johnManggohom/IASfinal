@@ -2,45 +2,71 @@
   
    <div class="py-12 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2">
+            <div class=" overflow-hidden shadow-sm sm:rounded-lg p-2">
                 <div class="flex p-2">
                     <a href="{{ route('admin.user.index') }}"
-                        class="px-4 py-2 bg-green-700 hover:bg-green-500 text-slate-100 rounded-md">Users Index</a>
+                      class="w-14 flex items-center justify-center h-14 rounded-full  bg-green-700 hover:bg-green-500 rounded-md text-white "><i class="fas fa-chevron-left text-2xl"></i></a>
                 </div>
-                <div class="flex flex-col p-2 bg-slate-100">
-                    <div>User Name: {{ $user->name }}</div>
+                <div class="flex flex-col p-2 py-5  mt-5 bg-white">
+                    
+                     <div class="text-xl font-bold">User Details</div>
+                    <div class="text-lg mt-4">User Name: {{ $user->name }}</div>
+                    <div class="text-lg">Email: {{ $user->email }}</div>
                     
                 </div>
-                <div class="mt-6 p-2 bg-slate-100">
-                    <h2 class="text-2xl font-semibold">Roles</h2>
+                <div class="p-2 py-5  mt-5 bg-white">
+                    <h2 class="text-xl font-bold">Assign Role</h2>
                     <div class="flex space-x-2 mt-4 p-2">
                         @if ($user->roles)
                             @foreach ($user->roles as $user_role)
 
                                 @if ($user_role->name == 'user')
-                                        <div class="px-4 py-2 bg-red-300 text-white rounded-md" >
-                                            <button  style = "cursor: not-allowed">{{ $user_role->name }}</button>
+                                        <div class="px-4 py-2 bg-blue-300 text-white rounded-md relative" >
+                                            <button  class=" py-2 cursor: not-allowed">{{ $user_role->name }}</button>
                                         </div>
                                 @else
-                                     <form class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md" method="POST"
+                                <form class="px-4 py-2 hover:bg-blue-700 text-white rounded-md  bg-blue-500 relative" method="POST"
                                     action="{{ route('admin.user.roles.remove', [$user->id, $user_role->id]) }}"
                                     onsubmit="return confirm('Are you sure?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit">{{ $user_role->name }}</button>
+                                    
+                                    <div class="py-2">{{ $user_role->name }}</div>
+                                    
+                                    <div class="bg-red-500 rounded-md w-6 h-6  flex items-center justify-center rounded-full absolute" style="top: -15%; right: -5%;">
+                                                  <button type="submit" class="">x</button>
+                                    </div>
+                                  
                                 </form>
                                 @endif
                                
                             @endforeach
                         @endif
+
+                    
                     </div>
-                    <div class="max-w-xl mt-6">
+                    <div class="max-w-xl bg-white">
                         <form method="POST" action="{{ route('admin.user.roles', $user->id) }}">
                             @csrf
-                            <div class="sm:col-span-6">
+                            <div class="sm:col-span-6 pt-5">
                                 <label for="role" class="block text-sm font-medium text-gray-700">Roles</label>
                                 <select id="role" name="role" autocomplete="role-name"
-                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                   class="form-select form-select-lg mb-3
+      appearance-none
+      block
+      w-full
+      px-4
+      py-2
+      text-xl
+      font-normal
+      text-gray-700
+      bg-white bg-clip-padding bg-no-repeat
+      border border-solid border-gray-300
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label=".form-select-lg example">
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
@@ -52,7 +78,7 @@
                     </div>
                     <div class="sm:col-span-6 pt-5">
                         <button type="submit"
-                            class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-md">Assign</button>
+                            class="px-4 py-2 bg-green-500 hover:bg-green-700 text-white font-bold rounded-md">Assign Role</button>
                     </div>
                     </form>
                 </div>

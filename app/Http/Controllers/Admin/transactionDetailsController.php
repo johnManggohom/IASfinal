@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
-class servicesOnCartCOntroller extends Controller
+class transactionDetailsController extends Controller
 {
+  
     public function index(){
-
-    
-        return view('admin.cashier.index');
+        return view('admin.transaction.transaction_details');
     }
 }

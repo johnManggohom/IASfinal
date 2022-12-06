@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Services extends Model
+class  Services extends Model
 {
     use HasFactory;
+
 
       protected $fillable = ['name', 'prices', 'comission'];
 
@@ -20,6 +21,10 @@ class Services extends Model
     }
 
        public function transaction(){
+        return $this->hasOne(Transaction::class);
+    }
+
+           public function cart(){
         return $this->hasOne(Transaction::class);
     }
 }

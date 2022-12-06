@@ -7,19 +7,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-        protected $table = 'transaction';
     use HasFactory;
 
-       public function appointment(){
-        return $this->HasOne(Appointment::class);
-    }
+    protected $dates = ['end_time'];
 
-        public function user(){
+    public $fillable = ['user_id', 'dresser_id', 'service_id', 'start_time', 'end_time', 'appointment_price', 'invoice_number'];
+
+    
+       public function service(){
+        return $this->belongsTo(Services::class);
+    }
+  public function user(){
         return $this->belongsTo(User::class);
     }
 
-           
-    public function service(){
-        return $this->belongsTo(Services::class);
+
+    public function services(){
+return $this->belongstoMany(Services::class, 'service_transaction', 'transaction_id', 'service_id')->withPivot('price', 'quantity');
     }
+     public function dresser(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function wage(){
+        return $this->hasOne(Wage::class);
+    }
+
+
+     public static function scopeSearch($query, $term){
+
+        $term= "%$term%";
+
+        $query->where(function ($query) use ($term){
+           $query->whereHas('user', function($query) use($term) { $query->where('name','LIKE',$term);});
+        });
+
+
+
+    }
+
 }

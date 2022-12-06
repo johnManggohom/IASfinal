@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cart;
 use Livewire\Component;
 
 class CartCounter extends Component
@@ -12,7 +13,7 @@ class CartCounter extends Component
     public function render()
     {
 
-        $cart_count =Cart::content()->count() ; 
+        $cart_count =Cart::count(); 
         return view('livewire.cart-counter', compact('cart_count'));
     }
 }

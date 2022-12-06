@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-           Schema::table('appointment', function (Blueprint $table) {
-            //
+          
+           Schema::table('order_service', function (Blueprint $table) {
 
-             $table->string('status')->default('pending');
+             $table->integer('quantity')->after('price');
         });
     }
 

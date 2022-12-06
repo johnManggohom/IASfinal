@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -11,12 +12,17 @@ class dashCont extends Controller
 {
     public function index(){
 
-         if(Auth::user()->hasRole('admin')){
+      $gaga = auth()->user()->roles->pluck('name');
+      
+
+
+         if($gaga[0] == 'admin'){
             return view('admin.index');
-         }elseif(Auth::user()->hasRole('cashier')){
+         }elseif($gaga[0] == 'cashier'){
             return view('cashier.index');
+         }elseif($gaga[0] == 'user'){
+            return view('userpage.index');
          }
 
     }
-         
 }
