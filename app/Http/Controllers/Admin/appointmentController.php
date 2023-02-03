@@ -122,7 +122,11 @@ public function rejectAppointment(Appointment $appointment) {
 
 public function finishedAppointment(Appointment $appointment) {
 
+ 
+
         $update= Appointment::find($appointment->id);
+
+
        
 
 
@@ -152,7 +156,7 @@ public function finishedAppointment(Appointment $appointment) {
                 'price' => $transaction->appointment_price
             ]);
 
-            $transaction->increment('appointment_price',  1  *  $transaction->appointment_price);
+            // $transaction->increment('appointment_price',  1  *  $transaction->appointment_price);
         
 
         

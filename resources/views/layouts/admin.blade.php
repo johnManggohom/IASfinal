@@ -82,12 +82,14 @@
                 </button>
             </div>
                 <nav :class="{'block': open, 'hidden': !open}" class="flex-grow px-4 pb-4 md:block md:pb-0 md:overflow-y-auto">
-                    <x-admin-link href="{{ route('admin.roles.index') }}" :active="request()->routeIs('admin.roles.index')"> {{ __('Roles') }}</x-admin-link>
+
+                  <x-admin-link href="{{ route('admin.index') }}" :active="request()->routeIs('admin.roles.index')"> {{ __('Dashboard') }}</x-admin-link>
+                    {{-- <x-admin-link href="{{ route('admin.roles.index') }}" :active="request()->routeIs('admin.roles.index')"> {{ __('Roles') }}</x-admin-link> --}}
                     {{-- <x-admin-link  href="{{ route('admin.permissions.index') }}" :active="request()->routeIs('admin.permissions.index')"> {{ __('Permissions') }}</x-admin-link> --}}
                    
                      <x-admin-link  href="{{ route('admin.appointment.index') }}" :active="request()->routeIs('admin.appointment.index')"> {{ __('Appointment') }}</x-admin-link> 
                        <div @click.away="open = false" class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-xs font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
                             <span>Users</span>
                             <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
@@ -98,12 +100,12 @@
                         </div>
                     </div>
                       <x-admin-link href="{{ route('admin.services.index') }}" :active="request()->routeIs('admin.services.index')"> {{ __('Services') }}</x-admin-link>
-                      <x-admin-link  href="{{ route('admin.calendar.index') }}" :active="request()->routeIs('admin.calendar.index')"> {{ __('Calendar') }}</x-admin-link> 
+                      {{-- <x-admin-link  href="{{ route('admin.calendar.index') }}" :active="request()->routeIs('admin.calendar.index')"> {{ __('Calendar') }}</x-admin-link>  --}}
                       
                       <x-admin-link  href="{{ route('admin.inventory.index') }}" :active="request()->routeIs('admin.inventory.index')"> {{ __('Inventory') }}</x-admin-link> 
                       
-                         <div @click.away="open = false" class="relative" x-data="{ open: false }">
-                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-sm font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
+                         <div @click.away="open = false" class="relative " x-data="{ open: false }">
+                        <button @click="open = !open" class="flex flex-row items-center w-full px-4 py-2 mt-2 text-xs font-semibold text-left bg-transparent rounded-lg dark:bg-transparent dark:focus:text-white dark:hover:text-white dark:focus:bg-gray-600 dark:hover:bg-gray-600 md:block hover:text-gray-900 focus:text-gray-900 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline">
                             <span>Transactions</span>
                             <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}" class="inline w-4 h-4 mt-1 ml-1 transition-transform duration-200 transform md:-mt-1"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
@@ -140,7 +142,34 @@
                     </div>
                 </nav>
         </div>
-    <div class="flex w-full bg-slate-100">
+    <div class=" w-full bg-slate-100">
+                  <header class="flex items-end justify-end px-6 py-3 bg-white shadow-md ">
+
+    <div class="flex items-center gap-2">
+       
+        <p>{{auth()->user()->name , 0, 1, "UTF-8"}}</p>
+        <div x-data="{ dropdownOpen: false }"  class="relative">
+            <button @click="dropdownOpen = ! dropdownOpen" class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none bg-blue-500">
+
+              <span class="font-extrabold text-white">  {{ mb_substr(auth()->user()->name , 0, 1, "UTF-8") }} </span>  
+                {{-- <img class="object-cover w-full h-full" src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=296&q=80" alt="Your avatar"> --}}
+            </button>
+
+            <div x-cloak x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"></div>
+
+            <div x-cloak x-show="dropdownOpen" class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl">
+
+                <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"  class="w-full py-2">
+                            {{ __('Logout') }}
+                        </button>
+                    </form>
+
+            </div>
+        </div>
+    </div>
+</header>
        {{ $slot }}
           <livewire:custom-modal>
              <livewire:service-modal>

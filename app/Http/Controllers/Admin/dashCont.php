@@ -17,11 +17,11 @@ class dashCont extends Controller
 
 
          if($gaga[0] == 'admin'){
-            return view('admin.index');
+            return to_route('admin.index');
          }elseif($gaga[0] == 'cashier'){
             return view('cashier.index');
          }elseif($gaga[0] == 'user'){
-            return view('userpage.index');
+            return to_route('user.index');
          }
 
     }

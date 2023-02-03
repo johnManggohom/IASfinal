@@ -24,7 +24,7 @@
         @forelse ($carts as $cart )
             <tr class="border-b text-center">
                   <td>{{ $cart->name}}</td>
-               <td><i class="fas fa-angle-down" wire:click='increaseQuantity({{ $cart->id }})'></i>{{ $cart->quantity }}<i class="fas fa-angle-up" wire:click='decreaseQuantity({{ $cart->id}},{{  $cart->quantity}})'></i></td>
+               <td><i class="fas fa-angle-up" wire:click='increaseQuantity({{ $cart->id }})'></i>{{ $cart->quantity }}<i class="fas fa-angle-down" wire:click='decreaseQuantity({{ $cart->id}},{{  $cart->quantity}})'></i></td>
               <td>{{ $cart->price }}</td> 
               <td>{{ $cart->total }}</td>
               <td><i class="fas fa-times" wire:click='removeToCart({{ $cart->id }})'></i></td>
@@ -44,7 +44,7 @@
        
               {{  $commision }}
  <select id="permission" name="dresser_id" wire:model="dresser_id" autocomplete="permission-name"
-                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    class="mt-1 block w-full py-2 px-3 my-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="">Choose hair dresser</option>
                  @foreach ($hairDressers as $id=>$name)
                                        <option value="{{ $id }}">{{ $name }}</option>

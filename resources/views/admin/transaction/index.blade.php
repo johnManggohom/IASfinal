@@ -5,6 +5,7 @@
 
     <livewire:transacation-table>
 
+
         </div>
     </div>
 

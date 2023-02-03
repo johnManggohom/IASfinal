@@ -28,7 +28,7 @@
                             @forelse ($services as  $service)
                                 <tr class=" text-center  text-sm text-gray-600 hover:bg-cyan-50">
                                 <td class="p-2">{{  $service->name}}</td>
-                                 <td class="p-2">  ${{ ($service->prices) }}</td>
+                                 <td class="p-2">  {{ ($service->prices) }}</td>
                                 
                                <td class="px-6 py-4 whitespace-no-wrap border-gray-500 text-sm leading-5">
                             

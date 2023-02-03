@@ -20,11 +20,23 @@ class  Services extends Model
         return $this->HasOne(Appointment::class);
     }
 
-       public function transaction(){
-        return $this->hasOne(Transaction::class);
-    }
+        public function transaction(){
+            return $this->hasOne(Transaction::class);
+        }
 
            public function cart(){
         return $this->hasOne(Transaction::class);
+    }
+
+     public static function scopeSearch($query, $term){
+
+        $term= "%$term%";
+
+        $query->where(function ($query) use ($term){
+            $query->where('name', 'like', $term );
+        });
+
+
+
     }
 }

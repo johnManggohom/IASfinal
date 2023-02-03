@@ -1,39 +1,85 @@
-  <table class="w-full border">
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
 
-    <h1>{{ \Carbon\Carbon::now() }}</h1> 
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+    </style>
+</head>
+<body>
+    
+  
+  <table class="styled-table">
+
+    <h3>Date: {{ \Carbon\Carbon::now() }}</h3> 
      
                         <thead>
-                            <tr class="bg-gray-50 border-b">
+                            <tr>
                             
-                                <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
+                                <th>
+                                   
                                         Name
-                                    </div>
                                 </th>
-                                  <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
+                                  <th>
+                                  
                                         Hair Dresser
-                                    </div>
+                                   
                                 </th>
-                                <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
-                                      
-                                    </div>
+                                <th >
+                                   Service
                                 </th>
-                                <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
+                                <th>
+                                    
                                         Price
-                                    </div>
+                                   
                                 </th>
-                                  <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
+                                  <th >
+                                   
                                         Date and Time
-                                    </div>
+                                   
                                 </th>
-                                  <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
-                                    <div class="flex items-center justify-center">
+                                  <th>
+                                   
                                         Status
-                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -42,25 +88,25 @@
 
             
                          @foreach ($appointments as  $appointment)
-                                <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
-                                <td class="p-2 border-r">{{  $appointment->user->name}}</td>
-                                <td class="p-2 border-r">{{  $appointment->dresser->name}}</td>
-                                  <td class="p-2 border-r">{{  $appointment->service->name}}</td>
-                                  <td class="p-2 border-r">{{  $appointment->appointment_price}}</td>
-                                  <td class="p-2 border-r">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start_time)->format('M d Y g:i A')}}</td>
+                                <tr>
+                                <td >{{  $appointment->user->name}}</td>
+                                <td >{{  $appointment->dresser->name}}</td>
+                                  <td >{{  $appointment->service->name}}</td>
+                                  <td >{{  $appointment->appointment_price}}</td>
+                                  <td >{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start_time)->format('M d Y g:i A')}}</td>
 
                                   @if ($appointment->status == 'finished')
-                                                <td class="p-2 border-r bg-cyan-100 "> {{ $appointment->status}}</td>                         
+                                                <td> {{ $appointment->status}}</td>                         
                                      @else
 
                                      
                                      
                                             @if ($appointment->status == 'pending')
-                                            <td class="p-2 border-r bg-amber-100 "> {{ $appointment->status}}</td>
+                                            <td> {{ $appointment->status}}</td>
                                             @elseif ($appointment->status == 'rejected')
-                                                <td class="p-2 border-r bg-orange-100 "> {{ $appointment->status}}</td>
+                                                <td > {{ $appointment->status}}</td>
                                                 @elseif ($appointment->status == 'accepted')
-                                                <td class="p-2 border-r bg-yellow-100 "> {{ $appointment->status}}</td>
+                                                <td> {{ $appointment->status}}</td>
                                              @endif
 
 
@@ -71,3 +117,6 @@
                             @endforeach
                         </tbody>
                     </table>
+
+</body>
+</html>

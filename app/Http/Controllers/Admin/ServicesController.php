@@ -14,8 +14,8 @@ class ServicesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $services = Services::all();
-        return view('admin.services.index', compact('services'));
+        
+        return view('admin.services.index');
     }
 
     /**

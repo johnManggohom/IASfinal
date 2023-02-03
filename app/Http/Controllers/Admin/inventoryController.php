@@ -13,4 +13,10 @@ class inventoryController extends Controller
         $inventories = Inventory::all();
         return view('admin.inventory.index', compact('inventories'));
     }
+
+        public function create()
+    {
+        return view('admin.inventory.create');
+
+    }
 }

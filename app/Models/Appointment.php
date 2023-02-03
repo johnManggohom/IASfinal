@@ -34,8 +34,8 @@ class Appointment extends Model
         $term= "%$term%";
 
         $query->where(function ($query) use ($term){
-            $query->where('appointment_price', 'like', $term )->orWhereHas('service', function($query) use($term) { $query->where('name','LIKE',$term);})->orWhereHas('user', function($query) use($term) { $query->where('name','LIKE',$term);
-  })->orWhereHas('dresser', function($query) use($term) {
+              $query->where('appointment_price', 'like', $term )->orWhereHas('service', function($query) use($term) { $query->where('name','LIKE',$term);})->orWhereHas('user', function($query) use($term) { $query->where('name','LIKE',$term);
+    })->orWhereHas('dresser', function($query) use($term) {
     $query->where('name','LIKE',$term);
   });
         });

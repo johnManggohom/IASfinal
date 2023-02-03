@@ -59,7 +59,7 @@ return view('admin.wages.index',compact('revenues', 'sales'));
 
 
 
-         return to_route('admin.appointment.index');
+         return to_route('admin.wages.index');
     }
 
 

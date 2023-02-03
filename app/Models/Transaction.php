@@ -41,9 +41,18 @@ return $this->belongstoMany(Services::class, 'service_transaction', 'transaction
         $query->where(function ($query) use ($term){
            $query->whereHas('user', function($query) use($term) { $query->where('name','LIKE',$term);});
         });
-
-
-
     }
 
+    // public static function scopeSearchNo($query, $term){
+
+    //     $term= "%$term%";
+
+    //     $query->where(function ($query) use ($term){
+    //        $query->whereHas('user', function($query) use($term) { $query->where('transaction_number','LIKE',$term);});
+    //     });
+    // }
+    
+    public function scopeSearchNo($query, $term){
+    return $query->where(fn ($query) => $query->where('invoice_number', 'like', '%'.$term.'%'));
+}
 }

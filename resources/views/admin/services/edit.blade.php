@@ -1,14 +1,19 @@
 <x-admin-layout>
-    <div class="py-12 w-full">
+
+
+      <div class="py-12 w-2/3 mx-auto">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                   <div class="flex justify-end p-2">
-                    <a href="{{ route('admin.services.index') }}" class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md text-white ">Service Index</a>
+            <div class="bg-white overflow-hidden sm:rounded-lg">
+                   <div class="flex justify-start p-2">
+                  <div  class="w-10 flex items-center justify-center h-10 rounded-full  bg-green-700 hover:bg-green-500 rounded-md text-white"> <a  href="{{ route('admin.services.index') }}"><i class="fas fa-chevron-left text-lg"></i></a></div>
+                       
                 </div>
                <div class="flex flex-col">
                <!-- component -->
-<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-     <form method="POST" action="{{ route('admin.services.update', $service->id)}}">
+<div class="bg-white  rounded px-5 pt-3 pb-4 mb-4 flex flex-col my-2">
+
+  <div class="text-center text-lg font-bold">Update Service </div>
+      <form method="POST" action="{{ route('admin.services.update', $service->id)}}">
                             @csrf
                              @method('PUT')
                           <div class="sm:col-span-6">
@@ -35,4 +40,20 @@
             </div>
         </div>
     </div>
+    {{-- <div class="py-12 w-full">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                   <div class="flex justify-end p-2">
+                    <a href="{{ route('admin.services.index') }}" class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md text-white ">Service Index</a>
+                </div>
+               <div class="flex flex-col">
+               <!-- component -->
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
+   
+               </div>
+            </div>
+        </div>
+    </div> --}}
 </x-admin-layout>
+
+

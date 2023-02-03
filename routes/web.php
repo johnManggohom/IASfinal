@@ -19,8 +19,10 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\transactionController;
 use App\Http\Controllers\Admin\transactionDetailsController;
 use App\Http\Controllers\Admin\wagesController;
+use App\Http\Controllers\dashBoardController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\servicesInCartController;
+use App\Http\Controllers\User\Appointment\dashboardAppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,11 +89,13 @@ Route::middleware(['auth', 'verified', 'role:admin'])->name('admin.')->prefix('a
     ]]);
 
                Route::resource('/transaction', transactionController::class);
-               route::get('/transaction/{transaction}',[transactionController::class, 'getDetails'])->name('transaction.getDetails');
+                  Route::get('/transaction/generatepdf' , [transactionController::class, 'pdf'])->name('transaction.generatepdf');
+                route::get('/transaction/{transaction}',[transactionController::class, 'getDetails'])->name('transaction.getDetails');
                route::get('/transaction/sales/sale',[transactionController::class, 'sales'])->name('transaction.sales.sale');
            
 
              Route::resource('/inventory', inventoryController::class);
+               Route::get('/inventory/create', [inventoryController::class, 'create'])->name('inventory.create');
             Route::get('/cashier', [cartServicesController::class, 'index'])->name('cashier.index');
              Route::post('/cashier',[cartController:: class, 'store'])->name('cashier.store');
 
@@ -113,6 +117,8 @@ Route::middleware(['auth', 'role:cashier'])->name('cashier.')->prefix('cashier')
 Route::middleware(['auth', 'role:user'])->name('user.')->prefix('user')->group(
     function(){
         Route::get('/dashboard', [homeController::class, 'index'])->name('index');
+         Route::get('/dashboardUser', [dashBoardController::class, 'index'])->name('dashboardUser');
+        Route::resource('/appointment', dashboardAppointmentController::class);
     }
 );
 

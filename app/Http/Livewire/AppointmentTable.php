@@ -12,13 +12,14 @@ class AppointmentTable extends Component
 
     use WithPagination;
 
-    public $perPage = 5;
+    public $perPage = 10;
     public $search = '';
     public $searchDate = '';
     public $orderByStatus = '';
     public $status;
      public $gaga;
     public $from;
+        public $to;
       public $sortColumnName = 'start_time';
     public $sortDirection = 'desc';
 
@@ -46,15 +47,15 @@ return response()->streamDownload(
         ]);
     }
 
+    
+
     protected function pages()
 {
-    return Appointment::select(['appointment.*', 'users.name as user_name'])->join('users', 'appointment'. '.'. $this->append, '=', 'users.id' )->when($this->status, function($query) {
-         $query->where('status', $this->status);
-    })->when($this->from, function($query) {
-          $query->where('start_time','>=', $this->from);
-
-
-    })->orderBy($this->sortColumnName, $this->sortDirection)->search(trim($this->search));
+        return Appointment::select(['appointment.*', 'users.name as user_name'])->join('users', 'appointment'. '.'. $this->append, '=', 'users.id' )->when($this->status, function($query) {
+            $query->where('status', $this->status);
+        })->when($this->from, function($query) {
+            $query->where('start_time','>=', $this->from);
+        })->orderBy($this->sortColumnName, $this->sortDirection)->search(trim($this->search));
       
 }    
 
@@ -87,4 +88,13 @@ public function swapSortDirection(){
     return $this->sortDirection === 'asc' ? 'desc' : 'asc';
 }
 
+
+public function remove(){
+     $this->from = '';
+       $this->to= '';
+     $this->sortColumnName = 'start_time';
+    $this->sortDirection = 'asc';
+      $this->status = '';
+
+}
 }

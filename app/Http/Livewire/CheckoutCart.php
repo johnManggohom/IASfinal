@@ -80,7 +80,7 @@ public $email;
         if($cart->count() >= 1){
         try{
         DB::transaction(function() use($cart){
-        if($this->totalCartWithoutTax < $this->email && $this->dresser_id != ''){
+        if($this->totalCartWithoutTax <= $this->email && $this->dresser_id != ''){
             foreach ($cart  as $cartt) {
             $transaction_id = Helper::IDGenerator(new Transaction, 'invoice_number', 5, 'TRN');
 
@@ -104,12 +104,14 @@ public $email;
 
             $order->increment('appointment_price',  $cartProduct->quantity  *  $cartProduct->price);
         }
+        
             
         Wage::create([
             'user_id' => $this->dresser_id, 
             'service_id'=> $cartt->service_id,
             'invoice_number' => $transaction_id,
-            'commission'=>  $cartProduct->quantity  *  $cartProduct->price  * $commision
+            'commission'=>  $cartProduct->quantity  *  $cartProduct->price  * $commision,
+            'transaction_id' => $order->id
 
         ]);
     }

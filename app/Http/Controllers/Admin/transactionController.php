@@ -16,6 +16,10 @@ class transactionController extends Controller
         return view('admin.transaction.index', compact('transactions'));
     }
 
+     public function pdf(){
+        return view('admin.transaction.salespdf');
+    }
+
     public function getDetails($transaction){
 
         $transaction = Transaction::find($transaction);
